@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  
+  <div class="col-12">
+    <div class="card m-2 ">
+    <div class="card-body four"> 
+    <div><h1>Pharses History</h1></div>
+    <div class='d-flex justify-content-center align-items-center  gap-5 flex-wrap' >
+      {% for post in dataa %}
+      <div class="card" style="width: 18rem;">
+      <img src="{{post.cars.image.url}}" class="card-img-top" alt="...">
+      <div class="card-body" >
+        
+        <h5 class="card-title">Car Name :  <a class="btn btn-warning" href="{% url 'detail_post' post.id %}">{{post.cars.name}}</a></h5>
+        <h5 class="card-title">Price : {{post.cars.price}}</h5>
+        <h4>Brand Name : <button class="btn btn-danger  m-2">{{post.cars.brand}} </button></h4>
+        <h5 class="card-title">{{post.cars.description | truncatewords:10 }}</h5>
+        <div class='p-2' style="width:50% ; margin : auto">
+          <a class="btn btn-warning"  href="{% url 'detail_post' post.cars.id %}">View</a>
+        </div>
+      </div>
+      </div>
+    {% endfor %}
+    </div>
+    </div>
+  </div>
+  
+
+{% endblock  %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+<div class="col-12">
+  <div class="card m-2">
+    <div class="card-body one">
+      <div class="d-flex justify-content-center align-items-center p-4">
+        <h1>Welcome to our Carmart</h1>
+        <img class="home mx-5" src="{% static 'images/first.jpg' %}" alt="">
+     </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12">
+  <div class="card m-2">
+    <div class="card-body two">
+      <div class='d-flex justify-content-center'>
+      {% for b in brands %}
+        <div class='band'>
+          <a class="btn btn-warning m-2", style="width: 120px;" href="{% url 'brand_wise_post' b.slug %}">{{b.name}}</a>
+          </div>
+      {% endfor %}
+    </div>
+    </div>
+  </div>
+</div>
+<div class="col-12">
+  <div class="card m-2">
+    <div class="card-body three">
+      <div class='d-flex justify-content-center'>
+        <h4>Total car found : {{data | length}}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12">
+  <div class="card m-2 ">
+    <div class="card-body four"> 
+  <div class='d-flex justify-content-center align-items-center  gap-5 flex-wrap' >
+    {% for post in data %}
+    <div class="card" style="width: 18rem;">
+    <img src="{{post.image.url}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Car Name :  <a class="btn btn-warning" href="{% url 'detail_post' post.id %}">{{post.name}}</a></h5>
+      <h5 class="card-title">Price : {{post.price}}</h5>
+      <h5 class="card-title">Quantity : ${{post.quantity}}</h5>
+      <h4>Brand Name : <button class="btn btn-danger  m-2">{{post.brand}} </button></h4>
+      <h5 class="card-title">{{post.description | truncatewords:10 }}</h5>
+      <div class='p-2' style="width:50% ; margin : auto">
+        <a class="btn btn-warning"  href="{% url 'detail_post' post.id %}">View</a>
+      </div>
+      {% if request.user.is_authenticated %}
+      <div style="width:50% ; margin : auto"><a href="{% url 'buynow' id=post.id %}" class="btn btn-warning">Buy Now</a></div>
+      {% endif %}
+    </div>
+    </div>
+  {% endfor %}
+  </div>
+  </div>
+</div>
+
+
+
+{% endblock  %}
